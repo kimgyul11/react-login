@@ -22,7 +22,7 @@ const useRouter = () => {
     });
   }, []);
 
-  console.log(authService.currentUser);
+  console.log("auth", auth);
 
   const router = createBrowserRouter([
     {
