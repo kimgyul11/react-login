@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Auth from "./routes/Auth";
-import { authService } from "./api/fbase";
 import Home from "./routes/Home";
+import Profile from "./routes/Profile";
 import Root from "./routes/Root";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -31,6 +31,7 @@ const useRouter = () => {
       errorElement: <div>페이지 없음</div>,
       children: [
         { index: true, element: isLoggedIn ? <Home props={init} /> : <Auth /> },
+        { path: "profile", element: <Profile /> },
       ],
     },
     // { path: "/", element: isLoggedIn ? <Home /> : <Auth /> },

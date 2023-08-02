@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Profile() {
-  return <div>로그인되었음</div>;
+  return <div>프로필화면입니다.</div>;
 }
