@@ -9,6 +9,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import Content from "../components/Content";
 
 export default function Home({ userObj }) {
   const { email } = authService.currentUser;
@@ -78,10 +79,12 @@ export default function Home({ userObj }) {
         </form>
       </div>
       <div>
-        {contents.map((item) => (
-          <div key={item.id}>
-            <h4>{item.content}</h4>
-          </div>
+        {contents.map((contentObj) => (
+          <Content
+            key={contentObj.id}
+            contentObj={contentObj}
+            isOwner={contentObj.creatorId === userObj.uid}
+          />
         ))}
       </div>
     </>
