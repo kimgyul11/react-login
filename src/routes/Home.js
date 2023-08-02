@@ -1,31 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { authService, dbService } from "../api/fbase";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 
-export default function Home() {
+export default function Home({ userObj }) {
   const { email } = authService.currentUser;
   const [content, setContent] = useState("");
   const [contents, setContents] = useState([]);
-  const getContents = async () => {
-    const querySnapshot = await getDocs(collection(dbService, "content"));
-    querySnapshot.forEach((doc) => {
-      const contentObj = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setContents(contentObj);
-    });
-  };
+  //구식의 데이터 읽는 방법
+  // const getContents = async () => {
+  //   const querySnapshot = await getDocs(collection(dbService, "content"));
+  //   querySnapshot.forEach((doc) => {
+  //     const contentObj = {
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     };
+  //     setContents((prev) => [contentObj, ...prev]);
+  //   });
+  // };
   useEffect(() => {
-    getContents();
+    //getContents();
+    const q = query(
+      collection(dbService, "content"),
+      orderBy("regDate", "desc")
+    );
+    onSnapshot(q, (querySnapshot) => {
+      const newArray = querySnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setContents(newArray);
+    });
   }, []);
-  console.log(contents);
+
+  //submit핸들러
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
       const docRef = await addDoc(collection(dbService, "content"), {
         content,
         regDate: Date.now(),
+        creatorId: userObj.uid,
       });
       setContent("");
       console.log("Document written with ID: ", docRef.id);
@@ -52,6 +76,13 @@ export default function Home() {
           />
           <input type="submit" value="Nweet" />
         </form>
+      </div>
+      <div>
+        {contents.map((item) => (
+          <div key={item.id}>
+            <h4>{item.content}</h4>
+          </div>
+        ))}
       </div>
     </>
   );
