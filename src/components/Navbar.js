@@ -2,7 +2,8 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../api/fbase";
 
-export default function Navbar() {
+export default function Navbar({ userObj }) {
+  const isLoggedIn = userObj;
   const navigate = useNavigate();
   const onLogOutClick = () => {
     authService.signOut();
@@ -17,9 +18,11 @@ export default function Navbar() {
         <li>
           <Link to="/profile">My Profile</Link>
         </li>
-        <li>
-          <button onClick={onLogOutClick}>로그아웃</button>
-        </li>
+        {isLoggedIn && (
+          <li>
+            <button onClick={onLogOutClick}>로그아웃</button>
+          </li>
+        )}
       </ul>
     </nav>
   );

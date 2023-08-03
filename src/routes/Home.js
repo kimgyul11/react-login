@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { authService, dbService } from "../api/fbase";
 import {
   addDoc,
   collection,
-  getDocs,
   onSnapshot,
   orderBy,
   query,
-  where,
 } from "firebase/firestore";
 import Content from "../components/Content";
 
@@ -15,6 +13,8 @@ export default function Home({ userObj }) {
   const { email } = authService.currentUser;
   const [content, setContent] = useState("");
   const [contents, setContents] = useState([]);
+  const [attachement, setAttachement] = useState();
+  const fileInput = useRef();
   //구식의 데이터 읽는 방법
   // const getContents = async () => {
   //   const querySnapshot = await getDocs(collection(dbService, "content"));
@@ -64,6 +64,25 @@ export default function Home({ userObj }) {
     } = e;
     setContent(value);
   };
+  const onFileChange = (e) => {
+    const {
+      target: { files },
+    } = e;
+    const isFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachement(result);
+    };
+    reader.readAsDataURL(isFile);
+  };
+  const onClearPhotClick = () => {
+    setAttachement(null);
+    fileInput.current.value = null;
+  };
+
   return (
     <>
       <div>
@@ -75,7 +94,19 @@ export default function Home({ userObj }) {
             value={content}
             onChange={onChange}
           />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+            ref={fileInput}
+          />
           <input type="submit" value="Nweet" />
+          {attachement && (
+            <div>
+              <img src={attachement} width="50px" height="50px" />
+              <button onClick={onClearPhotClick}>취소</button>
+            </div>
+          )}
         </form>
       </div>
       <div>

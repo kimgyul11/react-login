@@ -8,31 +8,27 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const useRouter = () => {
   const auth = getAuth();
-  const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsLoggedIn(true);
         setUserObj(user);
       } else {
-        setIsLoggedIn(false);
+        setUserObj(user);
       }
-      setInit(true);
     });
   }, []);
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Root />,
+      element: <Root userObj={userObj} />,
       errorElement: <div>페이지 없음</div>,
       children: [
         {
           index: true,
-          element: isLoggedIn ? <Home userObj={userObj} /> : <Auth />,
+          element: userObj ? <Home userObj={userObj} /> : <Auth />,
         },
         { path: "profile", element: <Profile /> },
       ],
