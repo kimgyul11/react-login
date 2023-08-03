@@ -1,6 +1,7 @@
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { dbService } from "../api/fbase";
+import { dbService, storageService } from "../api/fbase";
+import { deleteObject, ref } from "firebase/storage";
 
 export default function Content({ contentObj, isOwner }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -8,9 +9,11 @@ export default function Content({ contentObj, isOwner }) {
   //삭제 핸들러
   const onDeleteClick = async () => {
     const ok = window.confirm("정말로 삭제하실건가요?");
+    const imgRef = ref(storageService, contentObj.url);
     if (ok) {
       //게시글 삭제
       await deleteDoc(doc(dbService, `content/${contentObj.id}`));
+      await deleteObject(imgRef);
     }
   };
   //수정 핸들러
@@ -47,6 +50,7 @@ export default function Content({ contentObj, isOwner }) {
       ) : (
         <>
           <h4>{contentObj.content}</h4>
+          {contentObj.url && <img src={contentObj.url} width="100px" />}
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>삭제하기</button>

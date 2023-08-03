@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { authService, dbService } from "../api/fbase";
+import { authService, dbService, storageService } from "../api/fbase";
+import { v4 as uuidv4 } from "uuid";
 import {
   addDoc,
   collection,
@@ -8,26 +9,16 @@ import {
   query,
 } from "firebase/firestore";
 import Content from "../components/Content";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export default function Home({ userObj }) {
   const { email } = authService.currentUser;
   const [content, setContent] = useState("");
   const [contents, setContents] = useState([]);
-  const [attachement, setAttachement] = useState();
+  const [attachement, setAttachement] = useState(""); //파일 접근
   const fileInput = useRef();
-  //구식의 데이터 읽는 방법
-  // const getContents = async () => {
-  //   const querySnapshot = await getDocs(collection(dbService, "content"));
-  //   querySnapshot.forEach((doc) => {
-  //     const contentObj = {
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     };
-  //     setContents((prev) => [contentObj, ...prev]);
-  //   });
-  // };
+
   useEffect(() => {
-    //getContents();
     const q = query(
       collection(dbService, "content"),
       orderBy("regDate", "desc")
@@ -47,13 +38,22 @@ export default function Home({ userObj }) {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const docRef = await addDoc(collection(dbService, "content"), {
+      let url = "";
+      if (attachement !== "") {
+        const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
+        await uploadString(fileRef, attachement, "data_url");
+        url = await getDownloadURL(fileRef);
+      }
+      const newContent = {
         content,
         regDate: Date.now(),
         creatorId: userObj.uid,
-      });
+        url,
+      };
+      await addDoc(collection(dbService, "content"), newContent);
       setContent("");
-      console.log("Document written with ID: ", docRef.id);
+      setAttachement("");
+      fileInput.current.value = null;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
