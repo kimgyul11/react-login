@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -18,3 +18,15 @@ const firebaseApp = initializeApp(firebaseConfig);
 export const authService = getAuth(firebaseApp);
 export const dbService = getFirestore(firebaseApp);
 export const storageService = getStorage(firebaseApp);
+
+const auth = getAuth();
+
+export function onUserStateChange(callback) {
+  onAuthStateChanged(auth, async (user) => {
+    if (user.displayName === null) {
+      user.displayName = user.email.split("@")[0];
+    }
+    const updateUser = user;
+    callback(updateUser);
+  });
+}

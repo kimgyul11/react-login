@@ -2,13 +2,14 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
+import { AuthContextProvider } from "../context/AuthContext";
 
-export default function Root({ userObj }) {
+export default function Root() {
   return (
-    <div>
-      <Navbar userObj={userObj} />
+    <AuthContextProvider>
+      <Navbar />
       <Outlet />
       <Footer />
-    </div>
+    </AuthContextProvider>
   );
 }

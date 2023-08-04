@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import Content from "../components/Content";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Home({ userObj }) {
   const { email } = authService.currentUser;
@@ -17,7 +18,7 @@ export default function Home({ userObj }) {
   const [contents, setContents] = useState([]);
   const [attachement, setAttachement] = useState(""); //파일 접근
   const fileInput = useRef();
-
+  const { user } = useAuthContext();
   useEffect(() => {
     const q = query(
       collection(dbService, "content"),
@@ -40,14 +41,14 @@ export default function Home({ userObj }) {
     try {
       let url = "";
       if (attachement !== "") {
-        const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
+        const fileRef = ref(storageService, `${user.uid}/${uuidv4()}`);
         await uploadString(fileRef, attachement, "data_url");
         url = await getDownloadURL(fileRef);
       }
       const newContent = {
         content,
         regDate: Date.now(),
-        creatorId: userObj.uid,
+        creatorId: user.uid,
         url,
       };
       await addDoc(collection(dbService, "content"), newContent);
@@ -114,7 +115,7 @@ export default function Home({ userObj }) {
           <Content
             key={contentObj.id}
             contentObj={contentObj}
-            isOwner={contentObj.creatorId === userObj.uid}
+            isOwner={contentObj.creatorId === user.uid}
           />
         ))}
       </div>
