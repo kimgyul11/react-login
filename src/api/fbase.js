@@ -23,9 +23,9 @@ const auth = getAuth();
 
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth, async (user) => {
-    if (user.displayName === null) {
-      user.displayName = user.email.split("@")[0];
-    }
+    // if (user.displayName === null) {
+    //   user.displayName = user.email.split("@")[0];
+    // }
     const updateUser = user;
     callback(updateUser);
   });

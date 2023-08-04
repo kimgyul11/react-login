@@ -13,7 +13,6 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useAuthContext } from "../context/AuthContext";
 
 export default function Home({ userObj }) {
-  const { email } = authService.currentUser;
   const [content, setContent] = useState("");
   const [contents, setContents] = useState([]);
   const [attachement, setAttachement] = useState(""); //파일 접근
@@ -65,6 +64,8 @@ export default function Home({ userObj }) {
     } = e;
     setContent(value);
   };
+
+  //파일 업로드
   const onFileChange = (e) => {
     const {
       target: { files },
@@ -79,6 +80,7 @@ export default function Home({ userObj }) {
     };
     reader.readAsDataURL(isFile);
   };
+  //취소버튼
   const onClearPhotClick = () => {
     setAttachement(null);
     fileInput.current.value = null;
@@ -90,7 +92,7 @@ export default function Home({ userObj }) {
         <form onSubmit={onSubmitHandler}>
           <input
             type="text"
-            placeholder={`${email}님의 하루는 어떤가요?`}
+            placeholder={`님의 하루는 어떤가요?`}
             maxLength={120}
             value={content}
             onChange={onChange}

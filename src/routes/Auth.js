@@ -7,7 +7,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { authService } from "../api/fbase";
 
 export default function Auth() {
   const auth = getAuth();

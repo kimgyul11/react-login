@@ -8,6 +8,11 @@ export default function Profile() {
   const { user, refreshUser } = useAuthContext();
   const [newDisplayName, setNewDisplayName] = useState(user.displayName);
   const [isUpdated, setIsUpdated] = useState(false);
+  if (newDisplayName === null) {
+    const splitEmail = user.email.split("@")[0];
+    setNewDisplayName(splitEmail);
+  }
+  console.log(user.photoURL);
 
   // const getMyNweets = async () => {
   //   const q = query(
@@ -49,6 +54,13 @@ export default function Profile() {
   return (
     <div>
       <form onSubmit={onSubmit}>
+        {user.photoURL && <img src={user.photoURL} width="100px" />}
+        {!user.photoURL && (
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3282/3282224.png"
+            width="100px"
+          />
+        )}
         <input
           type="text"
           value={newDisplayName}
