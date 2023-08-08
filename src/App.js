@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Auth from "./routes/Auth";
-import Home from "./routes/Home";
-import Profile from "./routes/Profile";
-import Root from "./routes/Root";
+import Auth from "./pages/Auth";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Root from "./pages/Root";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Login from "./pages/Login";
 
 export default function App() {
   const auth = getAuth();
@@ -26,7 +27,7 @@ export default function App() {
       children: [
         {
           index: true,
-          element: userObj ? <Home userObj={userObj} /> : <Auth />,
+          element: userObj ? <Home userObj={userObj} /> : <Login />,
         },
         { path: "profile", element: <Profile userObj={userObj} /> },
       ],

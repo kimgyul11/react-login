@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../api/fbase";
 import { useAuthContext } from "../context/AuthContext";
+import styles from "../style/Navbar.module.css";
 
 export default function Navbar() {
   const { user } = useAuthContext();
@@ -12,7 +13,7 @@ export default function Navbar() {
     navigate("/");
   };
   return (
-    <nav>
+    <nav className={styles.nav_wrap}>
       <ul>
         <li>
           <Link to="/">HOME</Link>

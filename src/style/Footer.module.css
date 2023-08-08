@@ -1,0 +1,6 @@
+.footer_wrap {
+  width: 100%;
+  background-color: red;
+  max-height: 50px;
+  flex: 1;
+}
