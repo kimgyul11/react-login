@@ -1,6 +1,10 @@
 .nav_wrap {
   flex: 1;
   width: 100%;
-  max-height: 50px;
-  background-color: beige;
+  max-height: 60px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }

@@ -12,6 +12,7 @@ export default function Navbar() {
     authService.signOut();
     navigate("/");
   };
+  console.log(isLoggedIn);
   return (
     <nav className={styles.nav_wrap}>
       <ul>
@@ -30,6 +31,7 @@ export default function Navbar() {
           </>
         )}
       </ul>
+      {isLoggedIn ? <button>로그아웃</button> : <button>로그인</button>}
     </nav>
   );
 }

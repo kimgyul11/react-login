@@ -11,7 +11,6 @@ export default function Root() {
       <Layout>
         <Navbar />
         <Outlet />
-        <Footer />
       </Layout>
     </AuthContextProvider>
   );

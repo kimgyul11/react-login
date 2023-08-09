@@ -12,23 +12,30 @@
 } */
 .login_wrap {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   flex: 2;
   background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .title_wrap {
   font-size: 26px;
   font-weight: 700;
   color: #262626;
+  margin-top: 15px;
 }
 /* 로그인 input영역  */
 .contentWrap {
+  flex: 2;
+  min-height: 350px;
   margin-top: 26px;
   padding: 1rem;
   /* flex:1나중에 추가 */
 }
 .content {
   margin-top: 12px;
+  height: 80px;
 }
 .inputTitle {
   font-size: 12px;
@@ -73,12 +80,14 @@
   flex-direction: column;
 }
 .buttonWrap button {
-  margin-bottom: 16px;
+  margin-top: 16px;
   height: 48px;
   border-radius: 5px;
   border: none;
   color: white;
   font-weight: bold;
+  cursor: pointer;
+  background-color: black;
 }
 
 .buttonWrap button:nth-child(1) {
@@ -86,6 +95,9 @@
 }
 .buttonWrap button:nth-child(2) {
   background-color: #9e30f4;
+}
+.buttonWrap button:nth-last-child() {
+  margin-bottom: 0;
 }
 .buttonWrap button:disabled {
   background-color: #dadada;
