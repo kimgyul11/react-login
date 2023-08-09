@@ -68,7 +68,7 @@ export default function LoginInput({ isLogin, onClickHandler }) {
       <div className={styles.title_wrap}>
         환영합니다👋
         <br />
-        일상을 공유해 보세요!
+        다양한 일상을 공유해 보세요!
       </div>
       <form onSubmit={onSubmit} className={styles.contentWrap}>
         <div>
