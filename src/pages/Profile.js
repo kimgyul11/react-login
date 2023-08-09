@@ -12,7 +12,6 @@ export default function Profile() {
     const splitEmail = user.email.split("@")[0];
     setNewDisplayName(splitEmail);
   }
-  console.log(user.photoURL);
 
   // const getMyNweets = async () => {
   //   const q = query(
@@ -59,6 +58,7 @@ export default function Profile() {
           <img
             src="https://cdn-icons-png.flaticon.com/512/3282/3282224.png"
             width="100px"
+            alt="profile"
           />
         )}
         <input

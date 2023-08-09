@@ -6,14 +6,18 @@ import { deleteObject, ref } from "firebase/storage";
 export default function Content({ contentObj, isOwner }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newContent, setNewContent] = useState(contentObj.content);
+
   //삭제 핸들러
   const onDeleteClick = async () => {
     const ok = window.confirm("정말로 삭제하실건가요?");
-    const imgRef = ref(storageService, contentObj.url);
+
     if (ok) {
       //게시글 삭제
       await deleteDoc(doc(dbService, `content/${contentObj.id}`));
-      await deleteObject(imgRef);
+      if (contentObj.url) {
+        const imgRef = ref(storageService, contentObj.url);
+        await deleteObject(imgRef);
+      }
     }
   };
   //수정 핸들러

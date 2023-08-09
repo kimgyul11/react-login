@@ -10,27 +10,36 @@
   display: flex;
   flex-direction: column;
 } */
+.login_component {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 .login_wrap {
   width: 100%;
-  max-width: 600px;
-  flex: 2;
+  height: 100%;
+  max-width: 500px;
   background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .title_wrap {
+  flex: 1;
+  max-height: 100px;
   font-size: 26px;
   font-weight: 700;
   color: #262626;
-  margin-top: 15px;
+  padding: 1rem;
 }
 /* 로그인 input영역  */
 .contentWrap {
-  flex: 2;
-  min-height: 350px;
   margin-top: 26px;
   padding: 1rem;
+  flex: 2;
   /* flex:1나중에 추가 */
 }
 .content {
@@ -75,12 +84,12 @@
 
 .buttonWrap {
   width: 100%;
-
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 }
 .buttonWrap button {
-  margin-top: 16px;
+  margin-bottom: 16px;
   height: 48px;
   border-radius: 5px;
   border: none;
@@ -102,4 +111,16 @@
 .buttonWrap button:disabled {
   background-color: #dadada;
   color: white;
+}
+
+/* 회원가입 토글버튼 */
+.toggle {
+  display: flex;
+  justify-content: end;
+  font-size: 15px;
+  font-weight: 600;
+}
+.toggle span:hover {
+  color: #ef0000;
+  cursor: pointer;
 }

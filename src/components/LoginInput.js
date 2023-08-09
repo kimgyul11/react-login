@@ -66,27 +66,26 @@ export default function LoginInput({ isLogin, onClickHandler }) {
   return (
     <div className={styles.login_wrap}>
       <div className={styles.title_wrap}>
-        환영합니다🥳
+        환영합니다👋
         <br />
-        로그인 페이지입니다!
+        일상을 공유해 보세요!
       </div>
-      <form onSubmit={onSubmit}>
-        <div className={styles.contentWrap}>
+      <form onSubmit={onSubmit} className={styles.contentWrap}>
+        <div>
           <div className={styles.content}>
             <div className={styles.inputTitle}>이메일 주소</div>
             <div className={styles.inputWrap}>
               <input
-                type="text"
+                type="email"
                 placeholder="이메일을 입력해주세요"
                 name="email"
                 value={email}
                 onChange={onChange}
-                required
               />
             </div>
-            <div className={styles.errorMessage}>
+            {/* <div className={styles.errorMessage}>
               올바른 이메일 형식을 입력해주세요!
-            </div>
+            </div> */}
           </div>
           <div className={styles.content}>
             <div className={styles.inputTitle}>비밀번호</div>
@@ -100,22 +99,25 @@ export default function LoginInput({ isLogin, onClickHandler }) {
                 required
               />
             </div>
-            <div className={styles.errorMessage}>
+            {/* <div className={styles.errorMessage}>
               영문,숫자,특수문자 포함 8자 이상 입력해주세요
-            </div>
+            </div> */}
+          </div>
+          <div className={styles.toggle}>
+            <span onClick={onClickHandler}>회원가입</span>
           </div>
         </div>
-        <button onClick={onClickHandler}>회원가입</button>
-        <div className={styles.buttonWrap}>
-          <button name="github" onClick={onSocialLogin}>
-            깃허브 아이디로 로그인
-          </button>
-          <button name="google" onClick={onSocialLogin}>
-            구글 아이디로 로그인
-          </button>
-          <button onClick={loginBtn}>확인</button>
-        </div>
       </form>
+
+      <div className={styles.buttonWrap}>
+        <button name="github" onClick={onSocialLogin}>
+          깃허브 아이디로 로그인
+        </button>
+        <button name="google" onClick={onSocialLogin}>
+          구글 아이디로 로그인
+        </button>
+        <button onClick={loginBtn}>확인</button>
+      </div>
     </div>
   );
 }

@@ -18,6 +18,7 @@ export default function Home({ userObj }) {
   const [attachement, setAttachement] = useState(""); //파일 접근
   const fileInput = useRef();
   const { user } = useAuthContext();
+
   useEffect(() => {
     const q = query(
       collection(dbService, "content"),

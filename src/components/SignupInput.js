@@ -1,11 +1,10 @@
 import React from "react";
 import styles from "../style/Login.module.css";
 export default function SignupInput({ isLogin, onClickHandler }) {
-  console.log(isLogin);
   return (
     <div className={styles.login_wrap}>
       <div className={styles.title_wrap}>
-        회원가입페이지
+        환영합니다🥳
         <br />
         5분이면 OK!
       </div>
@@ -28,8 +27,11 @@ export default function SignupInput({ isLogin, onClickHandler }) {
             <input type="email" placeholder="비밀번호" required />
           </div>
         </div>
+        <div className={styles.toggle}>
+          <span onClick={onClickHandler}>로그인으로 이동</span>
+        </div>
       </div>
-      <p onClick={onClickHandler}>로그인으로 이동</p>
+
       <div className={styles.buttonWrap}>
         <button>확인</button>
       </div>

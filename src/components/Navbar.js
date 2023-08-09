@@ -3,35 +3,47 @@ import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../api/fbase";
 import { useAuthContext } from "../context/AuthContext";
 import styles from "../style/Navbar.module.css";
+import AccordionMenu from "./AccordionMenu";
 
 export default function Navbar() {
   const { user } = useAuthContext();
   const isLoggedIn = user;
   const navigate = useNavigate();
-  const onLogOutClick = () => {
-    authService.signOut();
-    navigate("/");
-  };
-  console.log(isLoggedIn);
+  // const onLogOutClick = () => {
+  //   authService.signOut();
+  //   navigate("/");
+  // };
+  const menuItems = [
+    {
+      title: "프로필",
+      method: () => {
+        navigate("/profile");
+      },
+    },
+    {
+      title: "로그아웃",
+      method: () => {
+        authService.signOut();
+        navigate("/");
+      },
+    },
+  ];
   return (
     <nav className={styles.nav_wrap}>
-      <ul>
+      <ul className={styles.nev_menuWrap}>
         <li>
           <Link to="/">HOME</Link>
         </li>
-
-        {isLoggedIn && (
-          <>
-            <li>
-              <Link to="/profile">{user.displayName}님의 프로필</Link>
-            </li>
-            <li>
-              <button onClick={onLogOutClick}>로그아웃</button>
-            </li>
-          </>
-        )}
+        <li>
+          <Link to="/">분리수거</Link>
+        </li>
       </ul>
-      {isLoggedIn ? <button>로그아웃</button> : <button>로그인</button>}
+
+      {isLoggedIn ? (
+        <AccordionMenu items={menuItems} />
+      ) : (
+        <button>로그인</button>
+      )}
     </nav>
   );
 }
