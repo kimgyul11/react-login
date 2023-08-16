@@ -10,17 +10,21 @@
   display: flex;
   flex-direction: column;
 } */
-.login_component {
+/* .login_component {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+} */
+.login_component {
+  display: flex;
+  justify-content: center;
 }
 .login_wrap {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   max-width: 500px;
   background-color: #f7f7f7;
   display: flex;

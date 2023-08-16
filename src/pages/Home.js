@@ -22,7 +22,9 @@ export default function Home() {
   const [attachement, setAttachement] = useState(""); //파일 접근
   const fileInput = useRef();
   const { user } = useAuthContext();
+  console.log(user.uid);
 
+  //마운트할때 콜렉션을 가져온다.
   useEffect(() => {
     const q = query(
       collection(dbService, "content"),

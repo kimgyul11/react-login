@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../style/Login.module.css";
-export default function SignupInput({ isLogin, onClickHandler }) {
+export default function SignupInput({ onClickHandler }) {
+  //state
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  //input이벤트
+
+  //회원가입 submit
+
   return (
     <div className={styles.login_wrap}>
       <div className={styles.title_wrap}>
@@ -12,13 +20,23 @@ export default function SignupInput({ isLogin, onClickHandler }) {
         <div className={styles.content}>
           <div className={styles.inputTitle}>이메일 주소</div>
           <div className={styles.inputWrap}>
-            <input type="email" placeholder="이메일을 입력하세요" required />
+            <input
+              type="email"
+              placeholder="이메일을 입력하세요"
+              value={email}
+              required
+            />
           </div>
         </div>
         <div className={styles.content}>
           <div className={styles.inputTitle}>비밀번호</div>
           <div className={styles.inputWrap}>
-            <input type="password" placeholder="비밀번호" required />
+            <input
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              required
+            />
           </div>
         </div>
         <div className={styles.content}>

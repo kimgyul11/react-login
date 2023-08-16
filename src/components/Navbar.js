@@ -24,7 +24,7 @@ export default function Navbar() {
       title: "로그아웃",
       method: () => {
         authService.signOut();
-        navigate("/");
+        navigate("/login");
       },
     },
   ];

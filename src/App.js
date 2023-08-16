@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate,
+} from "react-router-dom";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -10,7 +14,7 @@ import Login from "./pages/Login";
 export default function App() {
   const auth = getAuth();
   console.log();
-  const [userObj, setUserObj] = useState();
+  const [userObj, setUserObj] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -27,11 +31,12 @@ export default function App() {
       children: [
         {
           index: true,
-          element: userObj ? <Home userObj={userObj} /> : <Login />,
+          element: <Home userObj={userObj} />,
         },
         { path: "profile", element: <Profile userObj={userObj} /> },
       ],
     },
+    { path: "/login", element: <Login /> },
   ]);
 
   return <RouterProvider router={router}></RouterProvider>;

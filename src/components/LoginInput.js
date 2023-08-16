@@ -8,13 +8,15 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
-export default function LoginInput({ isLogin, onClickHandler }) {
+export default function LoginInput({ onClickHandler }) {
+  const navigate = useNavigate();
   const auth = getAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
-  console.log(isLogin);
+
   const [error, setError] = useState("");
   const onChange = (e) => {
     const {
@@ -26,21 +28,39 @@ export default function LoginInput({ isLogin, onClickHandler }) {
       setPassword(value);
     }
   };
+  //로그인 submit
+  //1.로그인 시도
+  //2.성공할 경우 home으로 navigate
+  //3.실패할 경우 메세지를 출력
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      let data;
-      if (isLogin) {
-        data = await signInWithEmailAndPassword(auth, email, password);
-        console.log(data);
-      } else {
-        data = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(data);
-      }
+      let data = await signInWithEmailAndPassword(auth, email, password);
+      console.log(data);
+      navigate("/");
+      // data = await createUserWithEmailAndPassword(auth, email, password);
+      // console.log(data);
     } catch (error) {
       setError(error.message);
+      console.log(error);
     }
   };
+  // const onSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     let data;
+  //     if (isLogin) {
+  //       data = await signInWithEmailAndPassword(auth, email, password);
+  //       console.log(data);
+  //     } else {
+  //       data = await createUserWithEmailAndPassword(auth, email, password);
+  //       console.log(data);
+  //     }
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  //   navigate("/");
+  // };
 
   //로그인 버튼 클릭
   const loginBtn = (e) => {
@@ -62,6 +82,7 @@ export default function LoginInput({ isLogin, onClickHandler }) {
     }
     const data = await signInWithPopup(auth, provider);
     console.log(data);
+    navigate("/");
   };
   return (
     <div className={styles.login_wrap}>
@@ -81,11 +102,9 @@ export default function LoginInput({ isLogin, onClickHandler }) {
                 name="email"
                 value={email}
                 onChange={onChange}
+                required
               />
             </div>
-            {/* <div className={styles.errorMessage}>
-              올바른 이메일 형식을 입력해주세요!
-            </div> */}
           </div>
           <div className={styles.content}>
             <div className={styles.inputTitle}>비밀번호</div>
@@ -99,9 +118,9 @@ export default function LoginInput({ isLogin, onClickHandler }) {
                 required
               />
             </div>
-            {/* <div className={styles.errorMessage}>
-              영문,숫자,특수문자 포함 8자 이상 입력해주세요
-            </div> */}
+            <div className={styles.errorMessage}>
+              {error && <p>로그인 정보를 확인해주세요</p>}
+            </div>
           </div>
           <div className={styles.toggle}>
             <span onClick={onClickHandler}>회원가입</span>
